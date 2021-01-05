@@ -41,7 +41,7 @@ Y finalmente el archivo `config/config.js` en la parte de los [*scopes*](https:/
 * [Passport disocord](https://github.com/nicholastay/passport-discord)
 
 ### 💰 Ayudar
-* Paypal: kamerr_oficial@hotmail.com
+* [Paypal](https://www.paypal.com/donate/?hosted_button_id=MAB5M68DJG5PQ)
 * [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/kamerrezz)
 
 > Si quieres contactarme para un trabajo por correo, el asunto debe tener `job - <asunto>` o para soporte `suport - <asunto>`, si no seran ignorados. 
