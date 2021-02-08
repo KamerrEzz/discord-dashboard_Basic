@@ -1,4 +1,33 @@
+<h1 class="text-center my-5">Bienvenido {{user.username}}</h1>
 
-
-<h1>Servidor: {{servidor.name}}</h1>
-<h2>Login: {{user.username}}</h2>
+<div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {{#each servidores}}
+        <div class="col my-1">
+            <div class="card">
+                <div class="row">
+                    <div class="col-4">
+                        {{#if this.icon}}
+                        <img src="https://cdn.discordapp.com/icons/{{this.id}}/{{this.icon}}.png" style="height: 128px;width: 128px;" class="img-fluid rounded-circle"
+                            alt="{{this.name}}">
+                        {{else}}
+                        <img src="https://i.imgur.com/fLjsfaC.png" style="height: 128px;width: 128px;" class="img-fluid rounded-circle" alt="{{this.name}}">
+                        {{/if}}
+                    </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this.name}}</h5>
+                            {{#if this.esta}}
+                            <a href="/dash/{{this.id}}" class="btn btn-primary">Iniciar</a>
+                            {{ else }}
+                            <a href="https://discord.com/api/oauth2/authorize?client_id=506651805736763403&permissions=0&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogin&scope=bot"
+                                class="btn btn-warning">Invitar</a>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

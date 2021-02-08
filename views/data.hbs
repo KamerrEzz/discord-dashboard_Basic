@@ -1,0 +1,10 @@
+<p>{{user.username}}</p>
+
+{{#each canales}}
+<p>{{this.name}}</p>
+{{/each}}
+
+{{#each emojis}}
+    <p>Emoji: {{this.name}}</p>
+    <img src="{{this.url}}" alt="{{this.name}}">
+{{/each}}
