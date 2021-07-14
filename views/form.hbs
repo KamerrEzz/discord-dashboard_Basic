@@ -1,0 +1,17 @@
+<h1>{{servidor}}</h1>
+
+<div class="container">
+  <form action="http://localhost:3000/dash/{{servidorID}}/prefix" method="post">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">prefix</label>
+      <input
+        type="text"
+        class="form-control"
+        id="prefix_form"
+        aria-describedby="emailHelp"
+        name="prefix_form"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

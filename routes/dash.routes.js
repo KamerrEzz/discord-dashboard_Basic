@@ -1,7 +1,7 @@
 const { Router, json } = require("express");
 const { auth } = require("../util/middleware/auth");
 
-const Prefix = require("../util/middleware/prefix")
+const GuildConfigModel = require('../util/models/guild')
 
 const router = Router();
 
@@ -35,50 +35,48 @@ router.get("/dash", auth, (req, res) => {
 
 router.get("/dash/:id", auth, async (req, res) => {
 
-  // let prefix = await Prefix.findOne({idguild: req.params.id})
-  // console.log(prefix)
-
-  // res.render("formulario", {
-  //   id: req.params.id
-  // })
-
-
   let id = req.params.id;
   let servidor = req.BotClient.guilds.cache.get(id);
-  let miembro = servidor.members.cache.get(req.user.id).roles.cache.map(rol => ({name:rol.name, id: rol.id}))
 
-  console.log(miembro)
 
-  let emoji = JSON.stringify(servidor.emojis.cache);
-  res.json({
-    servidor,
-    miembro,
-    canales: servidor.channels.cache,
-    roles: servidor.roles.cache,
-    emojis: JSON.parse(emoji),
+  res.render("form", {
+    servidor: servidor.name,
+    servidorID: servidor.id
   })
 
-  // res.render("data", {
-  //   user: req.user,
+
+  // let miembro = servidor.members.cache.get(req.user.id).roles.cache.map(rol => ({name:rol.name, id: rol.id}))
+
+  // console.log(miembro)
+
+  // let emoji = JSON.stringify(servidor.emojis.cache);
+  // res.json({
   //   servidor,
-  //   canales: servidor.channels.cache.filter(ch => ch.type === "text").map(ch => ({name: ch.name, id: ch.id})),
+  //   miembro,
+  //   canales: servidor.channels.cache,
   //   roles: servidor.roles.cache,
   //   emojis: JSON.parse(emoji),
-  // });
+  // })
 });
 
 router.post("/dash/:id/prefix", (req, res) => {
-  let bodyprefix = req.body.prefix;
-  let newprefix = new Prefix({
-    idguild: req.params.id,
-    prefix: bodyprefix,
+  let id = req.params.id;
+  let {prefix_form} = req.body;
+
+  console.log(prefix_form);
+
+
+  const saveGuldConfig = new GuildConfigModel({
+    prefix: prefix_form
   })
 
-  newprefix.save((error, db) => {
-    console.log(db)
+  saveGuldConfig.save((err, db) => {
+    if(err) console.error(err)
+    console.log(db);
   })
 
-  res.redirect(`/dash/${req.params.id}`);
+
+  res.redirect(`/dash/${id}`)
 })
 
 module.exports = router;

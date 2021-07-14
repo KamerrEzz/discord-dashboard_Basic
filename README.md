@@ -1,6 +1,6 @@
 # Discord Dashboard Basico | Tutorial
 
-Primera temporada
+Segunda temporada temporada
 
 Recuerda que esta es mi version con ejemplos y cosas, y partes ya listas para usar, pero es mejor que crees el tuyo desde cero con los video que hecho
 
