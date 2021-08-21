@@ -37,9 +37,12 @@ router.get("/dash/:id", auth, async (req, res) => {
 
   let id = req.params.id;
   let servidor = req.BotClient.guilds.cache.get(id);
-
+  let channelServer = servidor.channels.cache.filter(ch => ch.type == "text").map(a => ({id: a.id, name: a.name}));
+  let guild = await GuildConfigModel.findOne({ guildID: id });
 
   res.render("form", {
+    guild: guild ? guild : false,
+    channel: channelServer,
     servidor: servidor.name,
     servidorID: servidor.id
   })
@@ -59,24 +62,37 @@ router.get("/dash/:id", auth, async (req, res) => {
   // })
 });
 
-router.post("/dash/:id/prefix", (req, res) => {
+router.post("/dash/:id/prefix", async (req, res) => {
   let id = req.params.id;
-  let {prefix_form} = req.body;
+  let { prefix_form } = req.body;
 
-  console.log(prefix_form);
-
-
-  const saveGuldConfig = new GuildConfigModel({
-    prefix: prefix_form
-  })
-
-  saveGuldConfig.save((err, db) => {
-    if(err) console.error(err)
-    console.log(db);
-  })
-
+  if(prefix_form.length > 0) {
+    let guild = await GuildConfigModel.findOne({ guildID: id });
+    if (!guild) {
+      const saveGuldConfig = new GuildConfigModel({
+        guildID: id,
+        prefix: prefix_form
+      })
+  
+      saveGuldConfig.save((err, db) => {
+        if (err) console.error(err)
+        console.log("sabe", db);
+      })
+  
+    } else {
+      await GuildConfigModel.updateOne({ guildID: id }, { prefix: prefix_form });
+    }
+  } else {
+    await GuildConfigModel.deleteOne({ guildID: id });
+  }
 
   res.redirect(`/dash/${id}`)
 })
+router.post('/dash/:id/logs', async (req, res) => {
+  let id = req.params.id;
+  let channel = req.body.logs
 
+  console.log(channel)
+  res.redirect(`/dash/${id}`)
+})
 module.exports = router;

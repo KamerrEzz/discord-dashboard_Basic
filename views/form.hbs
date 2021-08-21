@@ -12,6 +12,22 @@
         name="prefix_form"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    {{#if guild}}
+      <button type="submit" class="btn btn-secondary">Actualizar</button>
+      <button type="submit" class="btn btn-danger">Eliminar</button>
+    {{else}}
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    {{/if}}
+  </form>
+
+  <form action="http://localhost:3000/dash/{{servidorID}}/logs" method="post">
+    <label for="logs" class="form-label">Seleccionar el canal de logs</label>
+    <select class="form-control" id="logs" name="logs">
+      <option value="none">Selecciona El canal...</option>
+      {{#each channel}}
+        <option value="{{this.id}}">{{this.name}}</option>
+      {{/each}}
+    </select>
+      <button type="submit" class="btn btn-primary">Enviar</button>
   </form>
 </div>
