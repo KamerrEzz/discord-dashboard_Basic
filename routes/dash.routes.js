@@ -38,10 +38,10 @@ router.get("/dash/:id", auth, async (req, res) => {
   let id = req.params.id;
   let servidor = req.BotClient.guilds.cache.get(id);
   let channelServer = servidor.channels.cache.filter(ch => ch.type == "text").map(a => ({id: a.id, name: a.name}));
-  let guild = await GuildConfigModel.findOne({ guildID: id });
+  // let guild = await GuildConfigModel.findOne({ guildID: id });
 
   res.render("form", {
-    guild: guild ? guild : false,
+    // guild: guild ? guild : false,
     channel: channelServer,
     servidor: servidor.name,
     servidorID: servidor.id

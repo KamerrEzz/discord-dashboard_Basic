@@ -7,7 +7,7 @@ const { db: {
   DB_HOST, 
 } } = require('../config/config')
 
-const url = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}`
+const url = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`
 
 mongoose.connect(url, {
   useNewUrlParser: true,

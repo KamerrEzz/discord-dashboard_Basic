@@ -7,7 +7,10 @@ const guildConfig = new Schema({
     },
     prefix: {
         type: 'string',
-    }
+    },
+    logs: {
+        type: 'string',
+    },
 });
 
 module.exports = mongoose.model('guildConfig', guildConfig);
