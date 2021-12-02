@@ -4,6 +4,8 @@ const { auth } = require("../util/middleware/auth");
 const GuildConfigModel = require('../util/models/guild')
 
 const router = Router();
+const fetchDJSGuild = require('../util/fetch/djs_guild')
+const fetchDJSGuildRoles = require('../util/fetch/djs_guild_roles')
 
 router.get("/dash", auth, (req, res) => {
   let servidores = [];
@@ -39,6 +41,11 @@ router.get("/dash/:id", auth, async (req, res) => {
   let servidor = req.BotClient.guilds.cache.get(id);
   let channelServer = servidor.channels.cache.filter(ch => ch.type == "text").map(a => ({id: a.id, name: a.name}));
   // let guild = await GuildConfigModel.findOne({ guildID: id });
+
+  const guild = await fetchDJSGuild(id)
+  const guildRoles = await fetchDJSGuildRoles(id)
+
+  // res.json(guildRoles)
 
   res.render("form", {
     // guild: guild ? guild : false,

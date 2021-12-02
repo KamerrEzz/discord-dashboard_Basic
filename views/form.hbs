@@ -20,16 +20,17 @@
     {{/if}}
   </form>
 
-
-  <form action="http://localhost:3000/dash/{{servidorID}}/logs" method="post">
-    <label class="form-label" for="channellogs">Selecciona el canal de logs</label>
-    <select class="form-control" id="channellogs" name="logs">
+  <div class="container-sm">
+    <form action="http://localhost:3000/dash/{{servidorID}}/logs" method="post">
+      <label class="form-label" for="channellogs">Selecciona el canal de logs</label>
+      <select class="form-control" id="channellogs" name="logs">
         <option value="false">selecciona el canal</option>
-      {{#each channel}}
-        <option value="{{id}}">{{name}}</option>
-      {{/each}}
-    </select>
-    <button type="submit" class="btn btn-primary">Enviar</button>
-  </form>
+        {{#each channel}}
+          <option value="{{id}}">{{name}}</option>
+        {{/each}}
+      </select>
+      <button type="submit" class="btn btn-primary mt-2">Enviar</button>
+    </form>
+  </div>
 
 </div>

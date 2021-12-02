@@ -1,4 +1,4 @@
-const { Router } = require("express");
+const { Router, request, response } = require("express");
 const passport = require("../server/passport");
 const { auth } = require("../util/middleware/auth");
 const router = Router();
@@ -11,6 +11,6 @@ router.get("/login", passport.authenticate("discord"), (req, res) => {
   res.redirect("/dash");
 });
 
-router.use("/", require('./dash.routes'))
+router.use("/", require("./dash.routes"));
 
 module.exports = router;
