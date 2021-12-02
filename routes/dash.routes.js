@@ -1,11 +1,10 @@
 const { Router, json } = require("express");
 const { auth } = require("../util/middleware/auth");
 
-const GuildConfigModel = require('../util/models/guild')
+const GuildConfigModel = require("../util/models/guild");
+const { djs_guild, djs_guilds } = require("../util/API/djs_guild");
 
 const router = Router();
-const fetchDJSGuild = require('../util/fetch/djs_guild')
-const fetchDJSGuildRoles = require('../util/fetch/djs_guild_roles')
 
 router.get("/dash", auth, (req, res) => {
   let servidores = [];
@@ -36,24 +35,25 @@ router.get("/dash", auth, (req, res) => {
 });
 
 router.get("/dash/:id", auth, async (req, res) => {
-
   let id = req.params.id;
-  let servidor = req.BotClient.guilds.cache.get(id);
-  let channelServer = servidor.channels.cache.filter(ch => ch.type == "text").map(a => ({id: a.id, name: a.name}));
-  // let guild = await GuildConfigModel.findOne({ guildID: id });
+  let guild = await djs_guild(id);
 
-  const guild = await fetchDJSGuild(id)
-  const guildRoles = await fetchDJSGuildRoles(id)
+  res.json(guild);
+
+  // let servidor = req.BotClient.guilds.cache.get(id);
+  // let channelServer = servidor.channels.cache
+  //   .filter((ch) => ch.type == "text")
+  //   .map((a) => ({ id: a.id, name: a.name }));
+  // let guild = await GuildConfigModel.findOne({ guildID: id });
 
   // res.json(guildRoles)
 
-  res.render("form", {
-    // guild: guild ? guild : false,
-    channel: channelServer,
-    servidor: servidor.name,
-    servidorID: servidor.id
-  })
-
+  // res.render("form", {
+  //   // guild: guild ? guild : false,
+  //   channel: channelServer,
+  //   servidor: servidor.name,
+  //   servidorID: servidor.id,
+  // });
 
   // let miembro = servidor.members.cache.get(req.user.id).roles.cache.map(rol => ({name:rol.name, id: rol.id}))
 
@@ -73,33 +73,35 @@ router.post("/dash/:id/prefix", async (req, res) => {
   let id = req.params.id;
   let { prefix_form } = req.body;
 
-  if(prefix_form.length > 0) {
+  if (prefix_form.length > 0) {
     let guild = await GuildConfigModel.findOne({ guildID: id });
     if (!guild) {
       const saveGuldConfig = new GuildConfigModel({
         guildID: id,
-        prefix: prefix_form
-      })
-  
+        prefix: prefix_form,
+      });
+
       saveGuldConfig.save((err, db) => {
-        if (err) console.error(err)
+        if (err) console.error(err);
         console.log("sabe", db);
-      })
-  
+      });
     } else {
-      await GuildConfigModel.updateOne({ guildID: id }, { prefix: prefix_form });
+      await GuildConfigModel.updateOne(
+        { guildID: id },
+        { prefix: prefix_form }
+      );
     }
   } else {
     await GuildConfigModel.deleteOne({ guildID: id });
   }
 
-  res.redirect(`/dash/${id}`)
-})
-router.post('/dash/:id/logs', async (req, res) => {
+  res.redirect(`/dash/${id}`);
+});
+router.post("/dash/:id/logs", async (req, res) => {
   let id = req.params.id;
-  let channel = req.body.logs
+  let channel = req.body.logs;
 
-  console.log(channel)
-  res.redirect(`/dash/${id}`)
-})
+  console.log(channel);
+  res.redirect(`/dash/${id}`);
+});
 module.exports = router;
