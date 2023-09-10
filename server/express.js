@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const hbs = require("express-handlebars");
+const {engine} = require("express-handlebars");
 const passport = require("./passport");
 const BotClient = require("./bot");
 const path = require("path");
@@ -20,7 +20,7 @@ app
   .use(passport.session())
   .set("views", path.join(__dirname, "../views"))
   .set("view engine", ".hbs")
-  .engine(".hbs", hbs({ extname: ".hbs" }))
+  .engine(".hbs", engine({ extname: ".hbs" }))
   .use((req, res, next) => {
     req.BotClient = BotClient;
     next();
