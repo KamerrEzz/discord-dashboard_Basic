@@ -1,5 +1,7 @@
-const { Client } = require("discord.js");
-const client = new Client();
+const { Client, IntentsBitField } = require("discord.js");
+const client = new Client({
+  intents: IntentsBitField.Flags.Guilds,
+});
 
 const {token} = require('../config/config')
 
