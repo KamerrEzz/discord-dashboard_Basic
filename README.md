@@ -1,5 +1,7 @@
 # Discord Dashboard Basico | Template
 
+> ⚠️ **Proyecto legado (2020).** Es un boilerplate básico y no representa mi nivel actual. Para ver trabajo más reciente: **[ledgr](https://github.com/KamerrEzz/ledgr)** · **[VaultAuth](https://github.com/KamerrEzz/nest-auth-hybrid)**.
+
 Este es solo una base para empezar a crear una dashboard para tu bot de discord de manera simple y facil.
 
 No es una dashboard con funciones y cosas para estar funcionando, eso lo quiero aclarar.
